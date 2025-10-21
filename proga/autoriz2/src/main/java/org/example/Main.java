@@ -45,18 +45,26 @@ public class Main {
                     System.out.println("Введите пароль: ");
                     String password = scanner.nextLine();
                     String hashPassword = encoder.encode(password);
-                    System.out.println("Введите почту: ");
-                    String email = scanner.nextLine();
-//                    if (!email.contains("@")){
-//                        System.out.println("Почта должна содержать '@'");
-//
-//                    }
-                    manager.checkDataRegist(login, hashPassword, email);
+                    String email;
+                    while (true) {
+                        System.out.println("Введите почту: ");
+                        email = scanner.nextLine();
+                        if (!email.contains("@")) {
+                            System.out.println("Почта должна содержать '@'");
+
+                        } else {
+                            break;
+                        }
+                    }
+
+
+                    //хуй
+                    manager.checkDataRegist(login, hashPassword, email, password);
                     break;
 
                 }
                 case 0: {
-                    exit(0);
+                    exit(1);
                 }
                 default: {
                     System.out.println("Неверный выбор");

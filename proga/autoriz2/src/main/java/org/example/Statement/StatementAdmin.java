@@ -1,6 +1,7 @@
 package org.example.Statement;
 
 import org.example.ConnectionDatabase.ConnectionManager;
+import org.example.Models.Game;
 import org.example.Models.User;
 
 import java.sql.Connection;
@@ -12,27 +13,22 @@ import java.util.List;
 
 public class StatementAdmin {
 
-    public List<User> getAllUsers(){
-        List<User> allUsers= new ArrayList<>();
+    public List<User> getAllUsers() {
+        List<User> allUsers = new ArrayList<>();
         String sql = "SELECT * FROM users";
-        try(Connection connection = ConnectionManager.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
 
-            if (rs.next()) {
-                while (rs.next()) {
-                    User user = new User();
-                    user.setId(rs.getInt("id"));
-                    user.setLogin(rs.getString("login"));
-                    user.setPassword(rs.getString("password"));
-                    user.setEmail(rs.getString("email"));
-                    user.setRole(rs.getInt("role"));
-                    user.setBlocked(rs.getBoolean("blocked"));
-                    allUsers.add(user);
-                }
-            }else{
-                System.out.println("Пользователей не найдено");
-
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setLogin(rs.getString("login"));
+                user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+                user.setRole(rs.getInt("role"));
+                user.setBlocked(rs.getBoolean("blocked"));
+                allUsers.add(user);
             }
 
         } catch (SQLException e) {
@@ -41,16 +37,16 @@ public class StatementAdmin {
         return allUsers;
     }
 
-    public void deleteVictim(String victim){
+    public void deleteVictim(String victim) {
         String sql = "DELETE FROM users WHERE login = ?";
-        try(Connection connection = ConnectionManager.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, victim);
             int rs = pstmt.executeUpdate();
-            if(rs!=0){
+            if (rs != 0) {
                 System.out.println("Пользователь " + victim + " удален");
 
-            }else {
+            } else {
                 System.out.println("Пользователь " + victim + " не найден");
 
             }
@@ -61,16 +57,16 @@ public class StatementAdmin {
 
     }
 
-    public void blockVictim(String victim){
+    public void blockVictim(String victim) {
         String sql = "UPDATE users SET blocked = true WHERE login = ?";
-        try(Connection connection = ConnectionManager.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, victim);
             int rs = pstmt.executeUpdate();
-            if(rs!=0){
+            if (rs != 0) {
                 System.out.println("Пользователь " + victim + " заблокирован");
 
-            }else {
+            } else {
                 System.out.println("Пользователь " + victim + " не найден");
 
             }
@@ -80,15 +76,15 @@ public class StatementAdmin {
         }
     }
 
-    public void makeNewAdmin(String futureAdmin){
+    public void makeNewAdmin(String futureAdmin) {
         String sql = "UPDATE users SET role = 1 WHERE login = ?";
-        try(Connection connection = ConnectionManager.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, futureAdmin);
             int rs = pstmt.executeUpdate();
-            if(rs!=0) {
+            if (rs != 0) {
                 System.out.println("Пользователь " + futureAdmin + " стал админом");
-            }else{
+            } else {
                 System.out.println("Пользователь " + futureAdmin + " не найден");
             }
 
@@ -96,4 +92,34 @@ public class StatementAdmin {
             throw new RuntimeException(e);
         }
     }
+
+    //crudGames
+
+    public List<Game> getAllGames() {
+        List<Game> allGames = new ArrayList<>();
+        String sql = "SELECT * FROM games";
+        try (Connection connection = ConnectionManager.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Game game = new Game();
+                game.setId(rs.getInt("id"));
+                game.setHard(rs.getInt("hard"));
+                game.setGame_time(rs.getInt("game_time"));
+                game.setTitle(rs.getString("title"));
+                game.setOnline(rs.getBoolean("online"));
+                game.setPrice(rs.getFloat("price"));
+                game.setRelease_date(rs.getDate("release_date"));
+                allGames.add(game);
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return allGames;
+    }
+
 }

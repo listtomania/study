@@ -46,7 +46,7 @@ public class StatementAction {
                 user.setEmail(rs.getString("email"));
                 user.setRole(rs.getInt("role"));
                 user.setBlocked(rs.getBoolean("blocked"));
-                System.out.println("Ваша почта: " + user.getEmail());
+
 
             }
         } catch (SQLException e) {
@@ -55,15 +55,15 @@ public class StatementAction {
         return user;
     }
 
-    public User registration(String login, String password, String email) {
-        User user = new User();
+    public User registration(String login, String password, String email, String psw) {
+        User user = null;
         String sql = "INSERT INTO Users (login, password, email, role, blocked) VALUES (?, ?, ?, ?, ?)";
         int x = 0;
         boolean y = false;
         try (Connection connection = ConnectionManager.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
             if(!userExists(login)) {
-                System.out.println("Проверка3");
+                user = new User();
                 pstmt.setString(1, login);
                 pstmt.setString(2, password);
                 pstmt.setString(3, email);
@@ -71,11 +71,10 @@ public class StatementAction {
                 pstmt.setBoolean(5, y);
                 pstmt.executeUpdate();
                 System.out.println("Регистрация прошла успешно");
+                user = authorization(login, psw);
 
                 return user;
 
-                // здесь ты не работаешь с юзером, ты только
-                //значения добавляешь в бд, в этом и проблема
             }else {
                 System.out.println("Пользователь с таким логином уже существует");
 
@@ -87,5 +86,7 @@ public class StatementAction {
 
         return user;
     }
+
+
 
 }
