@@ -89,7 +89,7 @@ public class Game {
 
     @Override
     public String toString() {
-        return "Название: " + title + "  Дата релиза: " + release_date + "  Цена: " + price + "  Время прохождения: " + game_time + "  Онлайн: " + online + "  Сложность: " + hard;
+        return "Id: " + id + " | Название: " + title + " | Дата релиза: " + release_date + " | Цена: " + price + " | Время прохождения: " + game_time + " | Онлайн: " + online + " | Сложность: " + hard;
 
     }
 }

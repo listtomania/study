@@ -8,37 +8,64 @@ import java.util.Scanner;
 
 public class CrudUsers {
     private final StatementAdmin statementAdmin = new StatementAdmin();
-    public void listOfUsers(){
-        List<User> allUsers= statementAdmin.getAllUsers();
-        System.out.println("Список всех пользователей:");
-        allUsers.forEach(System.out::println);
+
+    public void listOfUsers() {
+        List<User> allUsers = statementAdmin.getAllUsers();
+        if (!allUsers.isEmpty()) {
+            System.out.println("Список всех пользователей:");
+            allUsers.forEach(System.out::println);
+        } else {
+            System.out.println("Пользователей не найдено");
+        }
     }
+
     public void blockUser() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Давайте кого нибудь заблокируем)");
-        statementAdmin.getAllUsers();
-        listOfUsers();
-        System.out.println("Выберите логин жертвы");
-        String victim = scanner.nextLine();
-        statementAdmin.blockVictim(victim);
+        List<User> allUsers = statementAdmin.getAllUsers();
+        if (!allUsers.isEmpty()) {
+            listOfUsers();
+            System.out.println("Выберите логин жертвы");
+            String victim = scanner.nextLine();
+            if (!victim.isEmpty()) {
+                statementAdmin.blockVictim(victim);
+            }
+        } else {
+            System.out.println("Пользователей не найдено");
+        }
+
 
     }
-    public void deleteUser(){
+
+    public void deleteUser() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Давайте кого нибудь удалим)");
-        statementAdmin.getAllUsers();
-        listOfUsers();
-        System.out.println("Выберите логин жертвы");
-        String victim = scanner.nextLine();
-        statementAdmin.deleteVictim(victim);
+        List<User> allUsers = statementAdmin.getAllUsers();
+        if (!allUsers.isEmpty()) {
+            listOfUsers();
+            System.out.println("Выберите логин жертвы");
+            String victim = scanner.nextLine();
+            if (!victim.isEmpty()) {
+                statementAdmin.deleteVictim(victim);
+            }
+        } else {
+            System.out.println("Пользователей не найдено");
+        }
     }
-    public void makeAdmin(){
+
+    public void makeAdmin() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Добавим нового админа");
-        statementAdmin.getAllUsers();
-        listOfUsers();
-        System.out.println("Выберите логин");
-        String futureAdmin = scanner.nextLine();
-        statementAdmin.makeNewAdmin(futureAdmin);
+        List<User> allUsers = statementAdmin.getAllUsers();
+        if (!allUsers.isEmpty()) {
+            listOfUsers();
+            System.out.println("Выберите логин");
+            String futureAdmin = scanner.nextLine();
+            if (!futureAdmin.isEmpty()) {
+                statementAdmin.makeNewAdmin(futureAdmin);
+            }
+        } else {
+            System.out.println("Пользователей не найдено");
+        }
     }
 }

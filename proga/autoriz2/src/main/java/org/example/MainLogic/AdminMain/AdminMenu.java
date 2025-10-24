@@ -2,6 +2,7 @@ package org.example.MainLogic.AdminMain;
 
 import org.example.Models.Model;
 
+import java.sql.Date;
 import java.util.Scanner;
 
 public class AdminMenu {
@@ -94,11 +95,11 @@ public class AdminMenu {
             scanner.nextLine();
             switch (a) {
                 case 1: {
-                    crudGames.allGames();
+                    crudGames.getAllGames();
                     break;
                 }
                 case 2: {
-                    crudGames.addGame();
+                    crudGames.addNewGame();
                     break;
                 }
                 case 3: {
