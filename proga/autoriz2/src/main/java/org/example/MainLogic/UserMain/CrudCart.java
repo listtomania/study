@@ -15,7 +15,6 @@ public class CrudCart {
     private final CrudGames crudGames = new CrudGames();
 
     public void mainCart() {
-        System.out.println("Меню пользователя:");
         int a = -1;
         while (a != 0) {
             System.out.println("1. Посмотреть содержимое\n2. Добавить игру\n3. Удалить игру\n0. Выход");

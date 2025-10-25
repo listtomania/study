@@ -9,6 +9,8 @@ import java.util.Scanner;
 public class UserMenu {
     private final Scanner scanner = new Scanner(System.in);
     private final CrudMyOrders crudMyOrders = new CrudMyOrders();
+    private final CrudCart crudCart = new CrudCart();
+    private  final CrudMyInfo crudMyInfo = new CrudMyInfo();
 
     public void userMenu() {
         System.out.println("Здравствуйте, " + Model.getInstance().getCurrentUser().getLogin());
@@ -25,12 +27,16 @@ public class UserMenu {
                     crudMyOrders.makeOrderUser();
                     break;
                 }
-                case 2: {
-                    crudMyOrders.historyOrdersUser();
+                case 2:{
+                    crudCart.mainCart();
                     break;
                 }
                 case 3: {
-                    crudMyOrders.myInfoUser();
+                    crudMyOrders.historyOrdersUser();
+                    break;
+                }
+                case 4: {
+                    crudMyInfo.mainMyInfo();
                     break;
                 }
                 case 0: {
